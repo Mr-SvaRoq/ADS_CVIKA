@@ -1,0 +1,22 @@
+<h1> ADS - CVIKO 1</h1>
+<input type="file" (change)="readFile($event)">
+<br>
+<div *ngIf="rowColumns">
+  <br>
+  rows: {{rowColumns[0]}}
+  <br>
+  columns: {{rowColumns[1]}}
+</div>
+
+<h3>Greed algo with some black magic: {{sum}}</h3>
+
+<br>
+<!--<div *ngFor="let row of matrix">-->
+<!--  {{row}}-->
+<!--</div>-->
+<table id="myTable">
+  <tr *ngFor="let row of matrix">
+    <th style="width: 80px" *ngFor="let num of row">{{num}}</th>
+  </tr>
+</table>
+<hr>
