@@ -1,5 +1,13 @@
 <h1> ADS - CVIKO 1</h1>
-<input type="file" (change)="readFile($event)">
+<div>Navrhnite greedy algoritmus, ktorý vyberie z každého riadka matice práve jeden prvok tak, aby súčet
+  vybraných čísel bol čo najbližšie k nule. (V závislosti od vstupných dát, optimálne riešenie nemusí byť
+  jediné.)</div>
+<Br>
+Hodnotenie: <br>
+Suma < 100 1b <br>
+Suma < 10 2b <br>
+Suma = 0 3b<br>
+<input type="file" (change)="readFile($event)" accept=".txt">
 <br>
 <div *ngIf="rowColumns">
   <br>
@@ -8,15 +16,30 @@
   columns: {{rowColumns[1]}}
 </div>
 
-<h3>Greed algo with some black magic: {{sum}}</h3>
+<h3>Greed algo with some dark magic: {{sum}}</h3>
+<h3>Iteration: {{iteration}}</h3>
 
 <br>
 <!--<div *ngFor="let row of matrix">-->
 <!--  {{row}}-->
 <!--</div>-->
 <table id="myTable">
-  <tr *ngFor="let row of matrix">
-    <th style="width: 80px" *ngFor="let num of row">{{num}}</th>
+  <tr>
+    <th>#</th>
+    <th>0</th>
+    <th>1</th>
+    <th>2</th>
+    <th>3</th>
+    <th>Medzivysledky</th>
+  </tr>
+  <tr *ngFor="let row of matrix; let i = index">
+    {{i}}
+    <th style="width: 80px" *ngFor="let num of row; let j = index">
+      <div [ngClass]="{'chosen': result[i][1] === j}">
+        {{num}}
+      </div>
+    </th>
+    <th style="width: 80px" >{{result[i][0]}}</th>
   </tr>
 </table>
 <hr>
