@@ -1,0 +1,29 @@
+<h1> ADS - CVIKO 2</h1>
+<div>Chystate sa na dlhu cestu autom. Trasa cesty je pevne dana. V subore ADS2021_cvicenie2data.txt
+  mate rastucu postupnost 1000 cisel. Cisla oznacuju, na ktorych kilometroch Vasej trasy sa nachadza
+  mesto. V kazdom meste mozete prespat. Kazdu noc musite stravit v nejakom meste. Poslednu noc
+  musite stravit v poslednom meste na vasej trase. V tomto meste vasa trasa konci. Idealne by ste chceli kazdy den
+  prejst 400 km. V pripade, ze za niektory den prejdete vzdialenost x,
+  dostavate za ten den penalizaciu (400-x)². Pomocou dynamickeho programovania zistite, s akou
+  najnizsou celkovou penalizaciou je mozne absolvovat cestu. Pre data zo suboru</div>
+<Br>
+<input type="file" (change)="readFile($event)" accept=".txt">
+<br>
+<div>
+  --- {{penalization}} ---
+</div>
+<br>
+<table id="myTable">
+  <tr>
+    <th>#</th>
+    <th>km</th>
+    <th>skuska</th>
+<!--    <th>Medzivysledky</th>-->
+  </tr>
+  <tr *ngFor="let town of km; let i = index">
+    <th style="width: 80px" >{{i}}</th>
+    <th style="width: 80px" >{{town}}</th>
+  </tr>
+
+</table>
+<hr>
