@@ -16,6 +16,7 @@ export class Cviko2Component implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.penalization = 0;
   }
 
   readFile(e): void {
@@ -36,7 +37,7 @@ export class Cviko2Component implements OnInit {
   }
 
   dynamicProg(towns: number[]): number {
-    const ideal = 50;
+    const ideal = 400;
     const pen = [];
 
     // pre kazde mesto hlada idealne "cestu" s najmensou penalizaciou
