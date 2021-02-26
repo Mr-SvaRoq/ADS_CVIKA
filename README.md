@@ -1,5 +1,8 @@
 # Cviko1 2.5 / 3 (no comment, others got 3)
 
+zdovodnil to, ze som nerieisl edge pripady ....
+
+# Cviko2 3 / 3
 
 # AdsGreedyCviko1
 

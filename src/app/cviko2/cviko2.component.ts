@@ -44,8 +44,8 @@ export class Cviko2Component implements OnInit {
     const pen = [];
 
 
-    towns.forEach( (town, index) => { // v 604
-      pen.push(Math.pow(ideal - town, 2)); // 400 - 602 = power -> 40 804
+    towns.forEach( (town, index) => {
+      pen.push(Math.pow(ideal - town, 2));
       for (let pIndex = 0; pIndex < index; pIndex++) {
         const dif = towns[index] - towns[pIndex];
         const penWithStops = pen[pIndex] + Math.pow(ideal - dif, 2);
