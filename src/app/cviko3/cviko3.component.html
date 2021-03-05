@@ -1,0 +1,37 @@
+<h1> ADS - CVIKO 3</h1>
+<div>Mame obrazok pozostavajuci z m*n pixelov. Obrazok chceme komprimovat tak, ze z kazdeho z m
+  riadkov odstranime jeden pixel. Aby sme obrazok priliz nezdeformovali, musime pri odstranovani
+  pixelov dodrziavat nasledovne pravidlo: Ak sme v niektorom riadku odstranili pixel z k-teho stlpca,
+  potom v nasledujucom riadku mozeme odstranit iba pixel z toho isteho stlpca alebo z niektoreho zo
+  susediacich stlpcov. K obrazku prislucha aj matica D rozmeru m*n. Pre pixel nachadzajuci sa v itom
+  riadku a j-tom stlpci obrazka udava prvok D[i,j] matice D mieru poskodenia obrazka, ktore
+  sposobime, ak dany pixel z obrazka odstranime. V subore ADS2021_cvicenie3data.txt mame takuto
+  maticu D. Matica ma 1000 riadkov a 50 stlpcov. Kazdy prvok v matici je prirodzene cislo od 1 do 9.
+  Prvky v jednom riadku su oddelene medzerou. Pomocou dynamickeho programovania zistite, s
+  akym najmensim celkovym poskodenim je mozne komprimovat obrazok prisluchajuci k matici D.
+  Pre data zo suboru ADS2021_cvicenie3data.txt a pre ine data podobnej velkosti, musi vas program
+  zbehnut do minuty.</div>
+<Br>
+<input type="file" (change)="readFile($event)" accept=".txt">
+<br>
+<div>
+  --- {{penalization}} ---
+</div>
+<br>
+<!--<table>-->
+<!--  <tr>-->
+<!--    <th>#</th>-->
+<!--    <th>-&#45;&#45;</th>-->
+<!--  </tr>-->
+<!--  <tr *ngFor="let row of matrix; let i = index">-->
+<!--    <th>{{i}}</th>-->
+
+<!--    <th style="width: 80px" *ngFor="let num of row; let j = index">-->
+<!--  &lt;!&ndash;    <div [ngClass]="{'chosen': result[i][1] === j}">&ndash;&gt;-->
+<!--        {{num}}-->
+<!--  &lt;!&ndash;    </div>&ndash;&gt;-->
+<!--    </th>-->
+<!--  &lt;!&ndash;  <th style="width: 80px" >{{result[i][0]}}</th>&ndash;&gt;-->
+<!--  </tr>-->
+<!--</table>-->
+<hr>
