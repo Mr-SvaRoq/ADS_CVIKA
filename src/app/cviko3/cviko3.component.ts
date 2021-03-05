@@ -53,23 +53,23 @@ export class Cviko3Component implements OnInit {
   // 2154
   dynamicProg(matrix: number[][]): Promise<number> {
     return new Promise(resolve => {
-      const poskodenie = [];
+      const damage = [];
 
       matrix.forEach( (value, index) => {
-        poskodenie.push([...value]);
+        damage.push([...value]);
 
         if (index === 0) { return; }
 
-        poskodenie[index].forEach( (penValue, penIndex) => {
+        damage[index].forEach( (penValue, penIndex) => {
           const pom = [];
-          pom.push(penValue + poskodenie[index - 1][penIndex - 1]);
-          pom.push(penValue + poskodenie[index - 1][penIndex]);
-          pom.push(penValue + poskodenie[index - 1][penIndex + 1]);
-          poskodenie[index][penIndex] = Math.min(...pom.filter(p => !isNaN(p)));
+          pom.push(penValue + damage[index - 1][penIndex - 1]);
+          pom.push(penValue + damage[index - 1][penIndex]);
+          pom.push(penValue + damage[index - 1][penIndex + 1]);
+          damage[index][penIndex] = Math.min(...pom.filter(p => !isNaN(p)));
 
         });
       });
-      resolve(Math.min(...poskodenie.reverse()[0]));
+      resolve(Math.min(...damage.reverse()[0]));
 
     });
 
