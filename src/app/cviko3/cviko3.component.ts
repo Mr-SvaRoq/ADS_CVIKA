@@ -60,12 +60,12 @@ export class Cviko3Component implements OnInit {
 
         if (index === 0) { return; }
 
-        damage[index].forEach( (penValue, penIndex) => {
+        damage[index].forEach( (damageValue, damageIndex) => {
           const pom = [];
-          pom.push(penValue + damage[index - 1][penIndex - 1]);
-          pom.push(penValue + damage[index - 1][penIndex]);
-          pom.push(penValue + damage[index - 1][penIndex + 1]);
-          damage[index][penIndex] = Math.min(...pom.filter(p => !isNaN(p)));
+          pom.push(damageValue + damage[index - 1][damageIndex - 1]);
+          pom.push(damageValue + damage[index - 1][damageIndex]);
+          pom.push(damageValue + damage[index - 1][damageIndex + 1]);
+          damage[index][damageIndex] = Math.min(...pom.filter(p => !isNaN(p)));
 
         });
       });
