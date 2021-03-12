@@ -47,10 +47,13 @@ export class Cviko4Component implements OnInit {
   /* max vaha: 2000*/
   /* 0-1 poloziek z jednoho riadku*/
   /*hodnota1 / vaha1 / hodnota2 / vaha2 */
+  // https://www.youtube.com/watch?v=8LusJS5-AGo
+  // https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/
   dynamicProg(matrix: number[][]): Promise<number> {
     return new Promise(resolve => {
       const maxCapacity = 2000;
       const knapsack = new Array(matrix.length + 1).fill(0).map(() => new Array(maxCapacity + 1).fill(0));
+
       for (let i = 1; i < matrix.length + 1; i++) {
         const item1 = matrix[i - 1][0];
         const weight1 = matrix[i - 1][1];
