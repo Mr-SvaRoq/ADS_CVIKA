@@ -67,8 +67,7 @@ export class Zadanie1Component implements OnInit {
           this.tree = tree;
           const strings = ['of', 'for', 'the', 'another', 'even', 'door', 'vacation', 'slovensko'];
           strings.forEach( word => {
-            console.log('Number of comparisons for word ' + word + ' is ' + this.pocetPorovnani(word) + '.');
-            console.log('****************************************************');
+            this.pocetPorovnani(word);
           });
         });
       }
@@ -100,12 +99,6 @@ export class Zadanie1Component implements OnInit {
   extractKeysAndAddProbability(dictionary: Word[], sumFrequency: number): Word[] {
     let qSum = 0;
     const onlyKeyWords: Word[] = [];
-    const pTmp = [];
-    const wordTmp = [];
-
-    pTmp.push(0.0);                      // actually non existing element! p0 doesnt exist!
-    wordTmp.push('');
-
     let id = 0;
     // PRECO ?
     const emptyWord: Word = {
@@ -177,15 +170,11 @@ export class Zadanie1Component implements OnInit {
 
   findWord(roots: Word[][], start: number, end: number, findWord: string): string {
 
-    this.comparision = 0;
-
     if (start > end || end < 1) {
       return null;
     }
 
     if (roots[start][end] == null){
-      console.log('PROBLEM mojko');
-      this.comparision++;
       return null;
     }
 
@@ -199,34 +188,37 @@ export class Zadanie1Component implements OnInit {
     }
 
     // left tree
-    if (findWord.localeCompare(rootString) > 0) {
+    if (findWord.localeCompare(rootString) < 0) {
       this.comparision ++;
-      // @ts-ignore
       return  this.findWord(roots, start, rootId - 1, findWord);
     }
 
-    if (findWord.localeCompare(rootString) < 0){
+    if (findWord.localeCompare(rootString) > 0){
       // right tree
 
       this.comparision++;
-      // @ts-ignore
-      return  this.findWord(roots, start, rootId + 1, findWord);
+      return  this.findWord(roots, rootId + 1, end,  findWord);
     }
 
   }
 
   pocetPorovnani(findWord): number {
+    console.log('************************BEGIN************************');
     this.comparision = 0;
     if (findWord.length > 0) {
       const foundKey = this.findWord(this.tree, 1, this.tree.length - 1, findWord);
+      console.log('Number of comparisons for word ' + findWord + ' is ' + this.comparision + '.');
       if (foundKey == null){
-        console.log('Word ' + findWord + ' was not found.');
-        console.log('Dummy key is located on level ' + (findWord + 1) + '.');
+        console.log('Word \'' + findWord + '\' was not found.');
+        console.log('Dummy key is located on level ' + (this.comparision + 1) + '.');
       }else{
-        console.log('Word ' + findWord + ' was found.');
-        console.log('Key is located on level ' + findWord + '.');
+        console.log('Word \'' + findWord + '\' was found.');
+        console.log('Key is located on level ' + this.comparision + '.');
       }
     }
+
+    console.log('************************END************************');
+    console.log('');
 
     return this.comparision;
   }
