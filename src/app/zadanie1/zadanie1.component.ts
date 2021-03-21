@@ -49,7 +49,7 @@ export class Zadanie1Component implements OnInit {
 
   tree: Word[][] = null;
 
-  private  comparison = 0;
+  private comparison = 0;
 
   constructor() {
   }
@@ -218,7 +218,7 @@ export class Zadanie1Component implements OnInit {
   }
 
   pocetPorovnani(findWord): number {
-    this. comparison = 0;
+    this.comparison = 0;
     if (findWord.length > 0) {
       const foundKey = this.findWord(this.tree, 1, this.tree.length - 1, findWord);
       if (foundKey == null) {
@@ -228,7 +228,7 @@ export class Zadanie1Component implements OnInit {
       }
     }
 
-    return this. comparison;
+    return this.comparison;
   }
 
 }
