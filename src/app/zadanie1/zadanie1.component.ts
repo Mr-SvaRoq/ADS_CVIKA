@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {root} from 'rxjs/internal-compatibility';
 
 enum Key {
@@ -14,6 +14,7 @@ interface Word {
   qProbability: number;
   type: Key;
 }
+
 //
 // interface Node {
 //   word: Word;
@@ -30,6 +31,14 @@ interface Word {
 export class Zadanie1Component implements OnInit {
 
   file: any;
+
+  disabled = true;
+
+  showResult = false;
+
+  dummyKey = true;
+
+  inputWord: string;
 
   dictionary: Word[] = [];
 
@@ -48,11 +57,17 @@ export class Zadanie1Component implements OnInit {
   // expectedCost: number[][]; // e, -||-
   //
   // numberOfComparisons: number;
-  private comparision = 0;
+  private  comparison = 0;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
+  }
+
+  findMe(): void {
+    this.pocetPorovnani(this.inputWord);
+    this.showResult = true;
   }
 
   readFile(e): void {
@@ -61,21 +76,22 @@ export class Zadanie1Component implements OnInit {
     fileReader.onload = () => {
       if (typeof fileReader.result === 'string') {
         this.dictionary = this.convertTextToDictionary(fileReader.result);
-        this.dictionary.sort( (a, b) => a.label.localeCompare(b.label));
+        this.dictionary.sort((a, b) => a.label.localeCompare(b.label));
         this.keyWords = this.extractKeysAndAddProbability(this.dictionary, this.sumFrequency);
         this.createTree(this.keyWords).then(tree => {
           this.tree = tree;
-          const strings = ['of', 'for', 'the', 'another', 'even', 'door', 'vacation', 'slovensko'];
-          strings.forEach( word => {
-            this.pocetPorovnani(word);
-          });
+          this.disabled = false;
+          // const strings = ['of', 'for', 'the', 'another', 'even', 'door', 'vacation', 'slovensko'];
+          // strings.forEach(word => {
+          //   this.pocetPorovnani(word);
+          // });
         });
       }
     };
     fileReader.readAsText(this.file);
   }
 
-  convertTextToDictionary(text: string): Word[]{
+  convertTextToDictionary(text: string): Word[] {
     const minFrequency = 50000;
     const dictionary = [];
     this.sumFrequency = 0;
@@ -100,7 +116,8 @@ export class Zadanie1Component implements OnInit {
     let qSum = 0;
     const onlyKeyWords: Word[] = [];
     let id = 0;
-    // PRECO ?
+
+    // prvy 0th element
     const emptyWord: Word = {
       id,
       frequency: 0,
@@ -109,9 +126,9 @@ export class Zadanie1Component implements OnInit {
       qProbability: 0,
       type: Key.DUMMY
     };
-
     onlyKeyWords.push(emptyWord);
-    dictionary.forEach( word => {
+
+    dictionary.forEach(word => {
       if (word.type === Key.NORMAL) {
         id += 1;
         word.id = id;
@@ -124,35 +141,48 @@ export class Zadanie1Component implements OnInit {
       }
     });
 
-    // onlyKeyWords.push();
     return onlyKeyWords;
   }
 
   // https://www.youtube.com/watch?v=FvdPo8PBQtc+
+  // 15.5 Optimal binary search trees
   createTree(probabilityTable: Word[]): Promise<Word[][]> {
     return new Promise(resolve => {
-      const n = probabilityTable.length - 1; // freq > 50000 - 1, lebo extra 0th element
 
-      // we dont use the 0th row and column, saving the keys right away so I can access more info
-      const root: Word[][] = new Array(n + 1).fill(0).map(() => new Array(n + 1).fill(0));
+      // neberieme 0 element, pri elementoch, kde freq > 50 000
+      const n = probabilityTable.length - 1;
 
-      // w, not using the 0th row
-      const probabilitySums = new Array(n + 2).fill(0).map(() => new Array(n + 1).fill(0));
+      // nepouzivame 0th row a column, ukladame kluce hned, aby sme mali viac info
+      const root: Word[][] = new Array(n + 1)
+        .fill(0)
+        .map(() => new Array(n + 1)
+          .fill(0));
 
-      // e, not using the 0th row
-      const expectedCosts = new Array(n + 2).fill(0).map(() => new Array(n + 1).fill(0));
+      // w, nepouzivame 0th row
+      const probabilitySums = new Array(n + 2)
+        .fill(0)
+        .map(() => new Array(n + 1)
+          .fill(0));
 
-      for (let i = 1; i <= n + 1; i++){          // we are filling up the tables from the 1st row
+      // e, nepouzivame 0th row
+      const expectedCosts = new Array(n + 2)
+        .fill(0)
+        .map(() => new Array(n + 1)
+          .fill(0));
+
+      // vyplnenie arrays od 1st row
+      for (let i = 1; i <= n + 1; i++) {
         probabilitySums[i][i - 1] = probabilityTable[i - 1].qProbability;
         expectedCosts[i][i - 1] = probabilityTable[i - 1].qProbability;
       }
 
+      //black magic from 15.5 Optimal binary search trees
       for (let i = 1; i <= n; i++) {
         for (let ii = 1; ii <= n - i + 1; ii++) {
           const j = i + ii - 1;
           expectedCosts[ii][j] = Number.MAX_SAFE_INTEGER;
           probabilitySums[ii][j] = probabilitySums[ii][j - 1] + probabilityTable[j].pProbability + probabilityTable[j].qProbability;
-          for ( let iii = ii; iii <= j; iii++) {
+          for (let iii = ii; iii <= j; iii++) {
             const t = expectedCosts[ii][iii - 1] + expectedCosts[iii + 1][j] + probabilitySums[ii][j];
             if (t < expectedCosts[ii][j]) {
               expectedCosts[ii][j] = t;
@@ -170,57 +200,43 @@ export class Zadanie1Component implements OnInit {
 
   findWord(roots: Word[][], start: number, end: number, findWord: string): string {
 
-    if (start > end || end < 1) {
-      return null;
-    }
-
-    if (roots[start][end] == null){
+    if (start > end || end < 1 || roots[start][end] == null) {
       return null;
     }
 
     const rootString = roots[start][end].label;
     const rootId = roots[start][end].id;
 
+    this.comparison++;
+
     // found key
     if (rootString == null || rootString.length === 0 || rootString === findWord) {
-      this.comparision ++;
       return rootString;
     }
 
     // left tree
     if (findWord.localeCompare(rootString) < 0) {
-      this.comparision ++;
-      return  this.findWord(roots, start, rootId - 1, findWord);
+      return this.findWord(roots, start, rootId - 1, findWord);
     }
 
-    if (findWord.localeCompare(rootString) > 0){
-      // right tree
-
-      this.comparision++;
-      return  this.findWord(roots, rootId + 1, end,  findWord);
+    // right tree
+    if (findWord.localeCompare(rootString) > 0) {
+      return this.findWord(roots, rootId + 1, end, findWord);
     }
-
   }
 
   pocetPorovnani(findWord): number {
-    console.log('************************BEGIN************************');
-    this.comparision = 0;
+    this. comparison = 0;
     if (findWord.length > 0) {
       const foundKey = this.findWord(this.tree, 1, this.tree.length - 1, findWord);
-      console.log('Number of comparisons for word ' + findWord + ' is ' + this.comparision + '.');
-      if (foundKey == null){
-        console.log('Word \'' + findWord + '\' was not found.');
-        console.log('Dummy key is located on level ' + (this.comparision + 1) + '.');
-      }else{
-        console.log('Word \'' + findWord + '\' was found.');
-        console.log('Key is located on level ' + this.comparision + '.');
+      if (foundKey == null) {
+        this.dummyKey = true;
+      } else {
+        this.dummyKey = false;
       }
     }
 
-    console.log('************************END************************');
-    console.log('');
-
-    return this.comparision;
+    return this. comparison;
   }
 
 }

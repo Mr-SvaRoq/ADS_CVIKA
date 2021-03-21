@@ -4,8 +4,29 @@
   Introduction to Algorithms od autorov Cormen, Leiserson, Rivest a Stein . Pri vytvarani stromu
   postupujte nasledovne:</div>
 <Br>
+<br>
 <input type="file" (change)="readFile($event)" accept=".txt">
 <br>
 <div>
-  --- {{treeValue}} ---
+ Cena stromu: --- {{treeValue}} ---
 </div>
+
+<ng-container *ngIf="!disabled">
+  <input type="text"  [(ngModel)]="inputWord">
+  <button (click)="findMe()">Najdi ma</button>
+  <ng-container *ngIf="showResult">
+    <div>Slovo: {{inputWord}}</div>
+
+    <ng-container *ngIf="!dummyKey">
+      <div style="background-color: green">Slovo bolo najdene</div>
+      <div>Počet porovnaní: {{comparison}}</div>
+      <div>Key je  na úrovní {{comparison}}</div>
+    </ng-container>
+
+    <ng-container *ngIf="dummyKey">
+      <div style="background-color: red">Slovo nebolo najdene</div>
+      <div>Počet porovnaní: {{comparison}}</div>
+      <div>Dummy key je na úrovní {{comparison + 1}}</div>
+    </ng-container>
+  </ng-container>
+</ng-container>
