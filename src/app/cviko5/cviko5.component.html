@@ -1,0 +1,20 @@
+<h1> ADS - CVIKO 5</h1>
+<div>Mame subor ADS2021_cvicenie5data.txt. Subor obsahuje maticu vzdialenosti medzi 15 mestami
+  (jedna sa o cestne vzdialenosti, teda matica nie je symetricka). V prvom riadku suboru je navyse
+  uvedene, ze miest je 15. Mesta ocislujeme od 1 po 15. Kazda vzdialenost je prirodzene cislo od 1 do
+  9. Cislo v i-tom riadku a j-tom stlpci matice udava vzdialenost, ktoru musime prejst, ked cestujeme
+  z mesta i priamo do mesta j. Mame obchodneho cestujuceho, ktory chce vyrazit z mesta 1, chce
+  navstivit 9 roznych miest (mesto 1 do toho neratame) a vratit sa do mesta 1. Pomocou
+  dynamickeho programovania zistite dlzku najkratsej trasy, ktoru moze obchodny cestujuci zvolit.
+  Vase riesenie nesmie byt vypoctovo narocnejsie ako riesenie klasickeho TSP problemu na matici zo
+  suboru ADS2021_cvicenie5data.txt. Algoritmus, podobny tomu, ktory sa pouziva pri rieseni
+  klasickeho TSP problemu pomocou dynamickeho programovania, mozete vo vasom rieseni pouzit
+  iba raz. (Riesenie, pri ktorom by ste skusali vsetky podgrafy velkosti 10 a na kazdom riesili klasicky
+  TSP problem je totiz velmi neefektivne.) Pre data zo suboru ADS2021_cvicenie5data.txt a pre ine
+  data podobnej velkosti musi vas program zbehnut do minuty.</div>
+<Br>
+<input type="file" (change)="readFile($event)" accept=".txt">
+<br>
+<div>
+  --- {{result}} ---
+</div>
