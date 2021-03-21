@@ -43,7 +43,6 @@ export class Cviko4Component implements OnInit {
     });
     return matrixToCreate;
   }
-
   /* max vaha: 2000*/
   /* 0-1 poloziek z jednoho riadku*/
   /*hodnota1 / vaha1 / hodnota2 / vaha2 */
