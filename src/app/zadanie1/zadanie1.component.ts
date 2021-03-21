@@ -138,11 +138,11 @@ export class Zadanie1Component implements OnInit {
 
   // https://www.youtube.com/watch?v=FvdPo8PBQtc+
   // 15.5 Optimal binary search trees
-  createTree(probabilityTable: Word[]): Promise<Word[][]> {
+  createTree( keysTable: Word[]): Promise<Word[][]> {
     return new Promise(resolve => {
 
       // neberieme 0 element, pri elementoch, kde freq > 50 000
-      const n = probabilityTable.length - 1;
+      const n =  keysTable.length - 1;
 
       // nepouzivame 0th row a column, ukladame kluce hned, aby sme mali viac info
       const root: Word[][] = new Array(n + 1)
@@ -151,41 +151,41 @@ export class Zadanie1Component implements OnInit {
           .fill(0));
 
       // w, nepouzivame 0th row
-      const probabilitySums = new Array(n + 2)
+      const sums = new Array(n + 2)
         .fill(0)
         .map(() => new Array(n + 1)
           .fill(0));
 
-      // e, nepouzivame 0th row
-      const expectedCosts = new Array(n + 2)
+      // e, nepouzivame 0th row, expectedCosts
+      const  costs = new Array(n + 2)
         .fill(0)
         .map(() => new Array(n + 1)
           .fill(0));
 
       // vyplnenie arrays od 1st row
       for (let i = 1; i <= n + 1; i++) {
-        probabilitySums[i][i - 1] = probabilityTable[i - 1].qProbability;
-        expectedCosts[i][i - 1] = probabilityTable[i - 1].qProbability;
+        sums[i][i - 1] =  keysTable[i - 1].qProbability;
+        costs[i][i - 1] =  keysTable[i - 1].qProbability;
       }
 
       // black magic from 15.5 Optimal binary search trees
       for (let i = 1; i <= n; i++) {
         for (let ii = 1; ii <= n - i + 1; ii++) {
           const j = i + ii - 1;
-          expectedCosts[ii][j] = Number.MAX_SAFE_INTEGER;
-          probabilitySums[ii][j] = probabilitySums[ii][j - 1] + probabilityTable[j].pProbability + probabilityTable[j].qProbability;
+          costs[ii][j] = Number.MAX_SAFE_INTEGER;
+          sums[ii][j] = sums[ii][j - 1] +  keysTable[j].pProbability +  keysTable[j].qProbability;
           for (let iii = ii; iii <= j; iii++) {
-            const t = expectedCosts[ii][iii - 1] + expectedCosts[iii + 1][j] + probabilitySums[ii][j];
-            if (t < expectedCosts[ii][j]) {
-              expectedCosts[ii][j] = t;
-              root[ii][j] = probabilityTable[iii];
+            const t =  costs[ii][iii - 1] +  costs[iii + 1][j] + sums[ii][j];
+            if (t <  costs[ii][j]) {
+               costs[ii][j] = t;
+               root[ii][j] =  keysTable[iii];
             }
           }
         }
       }
 
-      // hodnota / cena stromu expectedCosts[1][150]
-      this.treeValue = expectedCosts[1][151];
+      // hodnota / cena stromu  costs[1][150]
+      this.treeValue =  costs[1][n];
       resolve(root);
     });
   }
