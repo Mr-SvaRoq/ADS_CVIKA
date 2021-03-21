@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {root} from 'rxjs/internal-compatibility';
 
 enum Key {
   NORMAL = 'NORMAL',
@@ -50,13 +49,6 @@ export class Zadanie1Component implements OnInit {
 
   tree: Word[][] = null;
 
-  // // //we dont use the 0th row and column, saving the keys right away so I can access more info
-  // roots: Word[][]; //  @param roots of our optimal binary search tree :)) duh
-  //
-  // probabilitySums: number[][]; // w, not using the 0th row
-  // expectedCost: number[][]; // e, -||-
-  //
-  // numberOfComparisons: number;
   private  comparison = 0;
 
   constructor() {
@@ -176,7 +168,7 @@ export class Zadanie1Component implements OnInit {
         expectedCosts[i][i - 1] = probabilityTable[i - 1].qProbability;
       }
 
-      //black magic from 15.5 Optimal binary search trees
+      // black magic from 15.5 Optimal binary search trees
       for (let i = 1; i <= n; i++) {
         for (let ii = 1; ii <= n - i + 1; ii++) {
           const j = i + ii - 1;
