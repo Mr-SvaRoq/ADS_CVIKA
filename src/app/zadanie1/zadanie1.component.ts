@@ -93,7 +93,7 @@ export class Zadanie1Component implements OnInit {
       const word: Word = {
         id: index,
         frequency: parseInt(rowString[0], 10),
-        label: rowString[1],
+        label: rowString[1].trim(),
         pProbability: -1,
         qProbability: -1,
         type: parseInt(rowString[0], 10) > minFrequency ? Key.NORMAL : Key.DUMMY,
@@ -169,11 +169,18 @@ export class Zadanie1Component implements OnInit {
       }
 
       // black magic from 15.5 Optimal binary search trees
+      // All sizes of sequences
+      // i is chain length (in book L)
       for (let i = 1; i <= n; i++) {
+        // All starting points of sequences
+        // ii is row number - cost[][] (in book i)
         for (let ii = 1; ii <= n - i + 1; ii++) {
           const j = i + ii - 1;
           costs[ii][j] = Number.MAX_SAFE_INTEGER;
           sums[ii][j] = sums[ii][j - 1] +  keysTable[j].pProbability +  keysTable[j].qProbability;
+          // All roots of sequence ki .. kj
+          // Try making all keys in interval keys[i..j] as root
+          // in book iii === r
           for (let iii = ii; iii <= j; iii++) {
             const t =  costs[ii][iii - 1] +  costs[iii + 1][j] + sums[ii][j];
             if (t <  costs[ii][j]) {
