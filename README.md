@@ -10,7 +10,11 @@ zdovodnil to, ze som nerieisl edge pripady ....
 
 # Cviko5 0 / 3
 
+# Cviko6 3 / 3
+
 # Zadanie1 15 / 15
+
+#SUM 29.5/33
 
 # AdsGreedyCviko1
 
