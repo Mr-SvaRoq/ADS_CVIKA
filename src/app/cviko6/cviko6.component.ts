@@ -37,21 +37,23 @@ export class Cviko6Component implements OnInit {
 
   convertTextToTokens(text: string): number[] {
     const tokensToCreate = [];
-    for (let i = 0; i < text.length; i++) {
-      tokensToCreate.push(parseInt(text.charAt(i), 10));
+    let text2 = text.trim();
+    for (let i = 0; i < text2.length; i++) {
+      tokensToCreate.push(parseInt(text2.charAt(i), 10));
     }
     return tokensToCreate;
   }
 
   blackMagic(coins: number[]): Promise<number> {
     return new Promise(resolve => {
+      // vopred vypocitane hondnoty, lebo idem bottom up
       const result = new Array(coins.length).fill(0).map(() => new Array(coins.length).fill(0));
       for (let interval = 0; interval < coins.length; interval++) {
         for (let i = 0, j = interval; j < coins.length; i++, j++) {
           let a = 0, b = 0, c = 0;
           let op1 = 0, op2 = 0;
 
-          // beriem i, krupier i + 1
+          // beriem i, krupier i + 1 ..... apson 3 tokens
           if (i + 2 <= j) {
             a = result[i + 2][j];
           }
