@@ -10,6 +10,7 @@ import { Cviko4Component } from './cviko4/cviko4.component';
 import { Zadanie1Component } from './zadanie1/zadanie1.component';
 import { Cviko5Component } from './cviko5/cviko5.component';
 import { Cviko6Component } from './cviko6/cviko6.component';
+import { Zadanie2Component } from './zadanie2/zadanie2.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { Cviko6Component } from './cviko6/cviko6.component';
     Cviko4Component,
     Zadanie1Component,
     Cviko5Component,
-    Cviko6Component
+    Cviko6Component,
+    Zadanie2Component
   ],
     imports: [
         BrowserModule,
