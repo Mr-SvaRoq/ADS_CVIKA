@@ -17,6 +17,6 @@
   <Br>
   <input type="file" (change)="readFile($event)" accept=".txt">
   <br>
-  <div>
-    --- {{result}} ---
+  <div *ngFor="let res of result">
+    --- {{res}} ---
   </div>

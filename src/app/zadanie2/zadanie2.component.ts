@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-interface Lecture {
+class Item {
   id: number;
   value: number;
   weight: number;
-  fragile: boolean;
+  fragile: number;
 }
 
 @Component({
@@ -17,13 +17,13 @@ export class Zadanie2Component implements OnInit {
 
   file: any;
 
-  result: any;
+  result: number[];
 
-  knapsack: any;
+  // knapsack: any;
 
-  lectures: Lecture[];
+  items: Item[];
 
-  sumLectures: number;
+  sumItems: number;
 
   maxWeight: number;
 
@@ -39,40 +39,73 @@ export class Zadanie2Component implements OnInit {
     const fileReader = new FileReader();
     fileReader.onload = () => {
       if (typeof fileReader.result === 'string') {
-        this.lectures = this.convertTextToLectures(fileReader.result);
-
-        // console.log(this.sumLectures);
-        // console.log(this.maxWeight);
-        // console.log(this.maxFragile);
+        this.items = this.convertTextToItems(fileReader.result);
+        this.items.unshift(new Item());
+        this.dynamicProg(this.items).then( result => {
+          this.result = result;
+        });
       }
     };
     fileReader.readAsText(this.file);
   }
 
-  convertTextToLectures(text: string): Lecture[] {
-    const lectures = [];
+  convertTextToItems(text: string): Item[] {
+    const items = [];
     const lectureRows = text.split('\n').filter(el => el.length > 0);
-    this.sumLectures = parseInt(lectureRows.shift(), 10);
+    this.sumItems = parseInt(lectureRows.shift(), 10);
     this.maxWeight = parseInt(lectureRows.shift(), 10);
     this.maxFragile = parseInt(lectureRows.shift(), 10);
     lectureRows.forEach((row, index) => {
       const rowString = row.split(' ').filter(el => el.length > 0);
-      const lecture: Lecture = {
+      const lecture: Item = {
         id: parseInt(rowString[0].trim(), 10),
         value: parseInt(rowString[1].trim(), 10),
         weight: parseInt(rowString[2].trim(), 10),
-        fragile: parseInt(rowString[3].trim(), 10) === 1
+        fragile: parseInt(rowString[3].trim(), 10)
       };
 
-      lectures.push(lecture);
+      items.push(lecture);
     });
-    return lectures;
+    return items;
   }
 
-  dynamicProg( lectures: Lecture[]): Promise<Lecture[]> {
+  dynamicProg( items: Item[]): Promise<number[]> {
     return new Promise(resolve => {
+      const knapsack = new Array(this.sumItems + 1).fill(0)
+        .map(() => new Array(this.maxWeight + 1).fill(0)
+          .map(() => new Array(this.maxFragile + 1).fill(0)));
 
-      resolve([]);
+      for (let i = 1; i < this.sumItems + 1; i++) {
+        for (let w = 0; w < this.maxWeight + 1; w++) {
+          for (let f = 0; f < this.maxFragile + 1; f++) {
+            if (items[i].weight > w) {
+              knapsack[i][w][f] = knapsack[i - 1][w][f];
+            }  else if (items[i].fragile > f) {
+              knapsack[i][w][f] = knapsack[i - 1][w][f];
+            } else {
+              const value1 =  knapsack[i - 1][w][f];
+              const value2 =  knapsack[i - 1][w - items[i].weight][f - items[i].fragile] + items[i].value;
+              knapsack[i][w][f] = Math.max(value1, value2);
+            }
+          }
+        }
+      }
+
+      const result = [];
+      result.push(knapsack[this.sumItems][this.maxWeight][this.maxFragile]);
+      let currentWeight = this.maxWeight;
+      let currentFragile = this.maxFragile;
+      for (let i = this.sumItems; i > 0; i --) {
+        if (knapsack[i][currentWeight][currentFragile] > knapsack[i - 1][currentWeight][currentFragile]) {
+          const item = items[i];
+
+          result.push(item.id);
+          currentFragile -= item.fragile;
+          currentWeight -= item.weight;
+        }
+      }
+      result.splice(1, 0, result.length - 1); // cnt of items
+      resolve(result);
     });
   }
 }
