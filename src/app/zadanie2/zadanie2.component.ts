@@ -57,14 +57,14 @@ export class Zadanie2Component implements OnInit {
     this.maxFragile = parseInt(lectureRows.shift(), 10);
     lectureRows.forEach((row, index) => {
       const rowString = row.split(' ').filter(el => el.length > 0);
-      const lecture: Item = {
+      const item: Item = {
         id: parseInt(rowString[0].trim(), 10),
         value: parseInt(rowString[1].trim(), 10),
         weight: parseInt(rowString[2].trim(), 10),
         fragile: parseInt(rowString[3].trim(), 10)
       };
 
-      items.push(lecture);
+      items.push(item);
     });
     return items;
   }
@@ -92,7 +92,7 @@ export class Zadanie2Component implements OnInit {
       }
 
       const result = [];
-      result.push(knapsack[this.sumItems][this.maxWeight][this.maxFragile]);
+      // result.push(knapsack[this.sumItems][this.maxWeight][this.maxFragile]);
       let currentWeight = this.maxWeight;
       let currentFragile = this.maxFragile;
       for (let i = this.sumItems; i > 0; i --) {
@@ -104,6 +104,11 @@ export class Zadanie2Component implements OnInit {
           currentWeight -= item.weight;
         }
       }
+      // @ts-ignore
+      result.sort((a, b) => {
+        return a - b;
+      });
+      result.splice(0, 0, knapsack[this.sumItems][this.maxWeight][this.maxFragile]); //  opt value
       result.splice(1, 0, result.length - 1); // cnt of items
       resolve(result);
     });

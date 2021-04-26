@@ -17,6 +17,9 @@
   <Br>
   <input type="file" (change)="readFile($event)" accept=".txt">
   <br>
-  <div *ngFor="let res of result">
+  <div *ngFor="let res of result; index as i">
+    <span *ngIf="i == 0">Optimalna hodnota: </span>
+    <span *ngIf="i == 1">Pocet predmetov: </span>
+    <span *ngIf="i > 1">ID predmetu: </span>
     --- {{res}} ---
   </div>

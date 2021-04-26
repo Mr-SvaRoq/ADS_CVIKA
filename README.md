@@ -20,6 +20,8 @@ zdovodnil to, ze som nerieisl edge pripady ....
 
 # Zadanie1 15 / 15
 
+# Zadanie2 15 / 15
+
 #SUM 38.5/42
 
 # AdsGreedyCviko1
