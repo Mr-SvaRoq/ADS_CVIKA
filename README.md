@@ -22,7 +22,7 @@ zdovodnil to, ze som nerieisl edge pripady ....
 
 # Zadanie2 15 / 15
 
-#SUM 38.5/42
+#SUM 53.5/57
 
 # AdsGreedyCviko1
 
