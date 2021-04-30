@@ -18,6 +18,8 @@ zdovodnil to, ze som nerieisl edge pripady ....
 
 # Cviko9 3 / 3
 
+# Cviko10 3 / 3
+
 # Zadanie1 15 / 15
 
 # Zadanie2 15 / 15
