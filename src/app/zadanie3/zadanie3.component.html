@@ -1,0 +1,21 @@
+<h1> ADS - Zadanie č. 3</h1>
+<div>Napíšte program, ktorý načíta vstupný súbor s logickou formulou v konjunktívnej normálnej forme (KNF,
+  angl,. CNF) v (zjednodušenom) DIMACS formáte (v jednotlivých klauzulách sú povolené najviac 2 literály
+  - môžete predpokladať korektný vstup). Program s polynomiálnou zložitosťou zistí, či je vstupná formula
+  splniteľná alebo nie je splniteľná (a vypíše na obrazovku SPLNITEĽNÁ/NESPLNITEĽNÁ). V prípade, že je
+  vstupná formula splniteľná, program vypíše pre jednotlivé použité booleovské premenné pravdivostné
+  hodnoty (PRAVDA/NEPRAVDA), po ktorých dosadení za príslušné booleovské premenné bude formula
+  mať hodnotu PRAVDA. Váš program musí využívať algoritmus zo stránky:</div>
+<Br>
+<br>
+<input type="file" (change)="readFile($event)" accept=".txt">
+<br>
+<div>
+
+  nbvar: {{this.nbvar}} <br>
+  nbclauses: {{this.nbclauses}}
+
+  <div *ngFor="let res of tfArray; index as i">
+    --- {{res.vertex}}: {{res.value}} --
+  </div>
+</div>
