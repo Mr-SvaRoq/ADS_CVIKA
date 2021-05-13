@@ -62,6 +62,7 @@ export class Zadanie3Component implements OnInit {
 
   foo(clauses: number[][]): any {
 
+    // create object
     this.graph = this.createObject(this.nbvar, () => []);
     this.reverseGraph = this.createObject(this.nbvar, () => []);
     this.visited = this.createObject(this.nbvar, () => false);
@@ -83,6 +84,7 @@ export class Zadanie3Component implements OnInit {
 
     // const size = this.nbclauses * 2;
 
+    // stavanie tych grafov
     this.cnfForm.forEach((el) => {
       const [a, b] = el;
       this.graph[-a].push(b);
@@ -92,16 +94,19 @@ export class Zadanie3Component implements OnInit {
     });
 
     for (let i = 0; i < this.nbvar; i++) {
+      // hladanie z predu a odzadu
       this.dfs1(i + 1);
-      this.dfs1(- (i + 1));
+      this.dfs1(- (i + 1)); // !C !B !A 0 A B C
     }
 
     this.visited = this.createObject(this.nbvar, () => false);
 
+    // stack -> vytvorenie componentov
     this.components = this.order.reverse().map( vertex => this.dfs2(vertex, {}));
 
     this.sat = true;
 
+    // kontrola, ci -1 -> 1 a 1 -> -1 (T -> F, F -> T), v jednom komponente sa nemozu nachadzat A && !A
     this.components.forEach(component => {
 
       for (const [[vertex, _]] of Object.entries(component)) {
@@ -118,6 +123,7 @@ export class Zadanie3Component implements OnInit {
       this.result = 'Splnitelna';
       const values = {};
 
+      // componenst su zavisle od seba, preto ide od konca/reverse
       this.components.reverse().forEach(component => {
         Object.entries(component).forEach(([vertex, _]) => {
           const parsedVertex = Math.abs(parseInt(vertex, 10));
@@ -140,17 +146,21 @@ export class Zadanie3Component implements OnInit {
     return;
   }
 
+  // zistujes postupnost vrcholov, ktore idu do stacku
   dfs1(vertex): any{
     if (this.visited[vertex]) { return; }
 
     this.visited[vertex] = true;
+    // check all neighbours
     this.graph[vertex].forEach(u => {
       this.dfs1(u);
     });
 
+    // pushuvanoe do stacku
     this.order.push(vertex);
   }
 
+  // vytvaranie komponentov
   dfs2(v: number, com: {}): any {
     if (this.visited[v]) {
       return com;
@@ -158,10 +168,12 @@ export class Zadanie3Component implements OnInit {
 
     this.visited[v] = true;
 
+    // checkovanie, ci dane cislo NIE je uz v komponente
     if (!com[v]) {
       com[v] = true;
     }
 
+    // checkucjem susedov
     this.reverseGraph[v].forEach(u => {
       this.dfs2(u, com);
     });
