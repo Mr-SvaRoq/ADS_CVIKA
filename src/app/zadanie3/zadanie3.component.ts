@@ -84,8 +84,9 @@ export class Zadanie3Component implements OnInit {
 
     // const size = this.nbclauses * 2;
 
-    // stavanie tych grafov
+    // stavanie tych grafovm, konjuktivna normalova forma - sa da prepisat na implikaciu ... disjunkcia na implikicaciu
     this.cnfForm.forEach((el) => {
+      // AvB = !A -> B v !B -> A
       const [a, b] = el;
       this.graph[-a].push(b);
       this.graph[-b].push(a);
@@ -106,7 +107,7 @@ export class Zadanie3Component implements OnInit {
 
     this.sat = true;
 
-    // kontrola, ci -1 -> 1 a 1 -> -1 (T -> F, F -> T), v jednom komponente sa nemozu nachadzat A && !A
+    // kontrola, ci -1 -> 1 a 1 -> -1 (T -> F, F -> T), v jednom komponente sa nemozu nachadzat A && !A ... T implikacia F = F (T -> F = F)
     this.components.forEach(component => {
 
       for (const [[vertex, _]] of Object.entries(component)) {
@@ -123,7 +124,7 @@ export class Zadanie3Component implements OnInit {
       this.result = 'Splnitelna';
       const values = {};
 
-      // componenst su zavisle od seba, preto ide od konca/reverse
+      // componenst su zavisle od seba, preto ide od konca/reverse, priradzujem hodnotu, ci je true false
       this.components.reverse().forEach(component => {
         Object.entries(component).forEach(([vertex, _]) => {
           const parsedVertex = Math.abs(parseInt(vertex, 10));
