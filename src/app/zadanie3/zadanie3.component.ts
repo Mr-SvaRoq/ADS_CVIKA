@@ -161,7 +161,7 @@ export class Zadanie3Component implements OnInit {
     this.order.push(vertex);
   }
 
-  // vytvaranie komponentov
+  // vytvaranie strong connected komponentov, topologicky sort
   dfs2(v: number, com: {}): any {
     if (this.visited[v]) {
       return com;
