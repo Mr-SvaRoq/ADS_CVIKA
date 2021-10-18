@@ -29,6 +29,10 @@ export class Cviko1Component implements OnInit {
   seasons: string[] = ['Winter', 'Spring', 'Summer', 'Autumn'];
 
   ngOnInit(): void {
+    console.log('print hckterbest');
+    if (this.sumFlag) {
+      console.log('i hope i got a tshirt');
+    }
   }
 
   readFile(e): void {
