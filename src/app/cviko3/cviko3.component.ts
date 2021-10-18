@@ -20,6 +20,10 @@ export class Cviko3Component implements OnInit {
 
   ngOnInit(): void {
     this.penalization = 0;
+    console.log('hacktoberfest-accepted);
+    if (this.penalization === 0) {
+      console.log('ups');
+    }
   }
 
   readFile(e): void {
