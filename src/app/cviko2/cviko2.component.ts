@@ -17,6 +17,11 @@ export class Cviko2Component implements OnInit {
 
   ngOnInit(): void {
     this.penalization = 0;
+    if (this.penalization  === 12) {
+      console.log('skusa lalala');
+    }
+    
+    console.log('I am tshirt')
   }
 
   readFile(e): void {
