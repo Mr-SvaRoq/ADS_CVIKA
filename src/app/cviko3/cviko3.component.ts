@@ -20,7 +20,7 @@ export class Cviko3Component implements OnInit {
 
   ngOnInit(): void {
     this.penalization = 0;
-    console.log('hacktoberfest-accepted);
+    console.log('hacktoberfest-accepted, ups I had to fixed it, tp run it');
     if (this.penalization === 0) {
       console.log('ups');
     }
